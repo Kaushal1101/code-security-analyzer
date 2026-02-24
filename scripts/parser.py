@@ -1,7 +1,7 @@
 import json
 import pprint
 
-with open("reports/bandit_report.json", "r") as f:
+with open("/Users/kaushaljayapragash/Desktop/Cybersecurity/code-security-analyzer/reports/bandit_report.json", "r") as f:
     data = json.load(f)
 
 delete_list = ["col_offset", "end_col_offset", "line_range"]
@@ -31,7 +31,7 @@ for result in data["results"]:
 bandit_data = data["results"]
 
     
-with open("reports/semgrep_report.json", "r") as f:
+with open("/Users/kaushaljayapragash/Desktop/Cybersecurity/code-security-analyzer/reports/semgrep_report.json", "r") as f:
     data = json.load(f)
 
 
@@ -76,7 +76,7 @@ semgrep_data = results
 all_data = semgrep_data + bandit_data
 
 
-with open("reports/parsed_report.json", "w") as f:
+with open("/Users/kaushaljayapragash/Desktop/Cybersecurity/code-security-analyzer/reports/parsed_report.json", "w") as f:
     json.dump(all_data, f, indent=2)
 
 

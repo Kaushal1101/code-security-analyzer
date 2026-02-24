@@ -1,8 +1,6 @@
 import requests
 import json
-
-import requests
-import json
+import time
 
 def call_local_llm(prompt: str, model: str = "qwen3:4b") -> str:
 
@@ -24,7 +22,7 @@ def call_local_llm(prompt: str, model: str = "qwen3:4b") -> str:
 
     return result["response"]
 
-with open("reports/parsed_report.json", "r") as f:
+with open("/Users/kaushaljayapragash/Desktop/Cybersecurity/code-security-analyzer/reports/parsed_report.json", "r") as f:
     data = json.load(f)
 
 data = json.dumps(data, indent=2)
@@ -37,5 +35,14 @@ You are given the following security findings:
 Generate a human-readable security report with recommended fixes.
 """
 
+start = time.perf_counter()
 output = call_local_llm(prompt)
-print(output)
+end = time.perf_counter()
+
+elapsed = end - start
+
+
+with open("/Users/kaushaljayapragash/Desktop/Cybersecurity/code-security-analyzer/reports/final_report.md", "w") as f:
+    data = f.write(output)
+
+print(f"LLM report complete ✅. Time taken: {elapsed} seconds.")
