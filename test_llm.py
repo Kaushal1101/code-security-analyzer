@@ -1,7 +1,10 @@
 import requests
 import json
 
-def call_local_llm(prompt: str, model: str = "llama3.2:3b") -> str:
+import requests
+import json
+
+def call_local_llm(prompt: str, model: str = "qwen3:4b") -> str:
 
     url = "http://localhost:11434/api/generate"
 
@@ -20,7 +23,6 @@ def call_local_llm(prompt: str, model: str = "llama3.2:3b") -> str:
     result = response.json()
 
     return result["response"]
-
 
 with open("reports/parsed_report.json", "r") as f:
     data = json.load(f)
