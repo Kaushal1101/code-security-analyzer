@@ -1,14 +1,3 @@
-Notice:
-- Outer fence = **four backticks**
-- Inner fences = **three backticks**
-
----
-
-## ✅ Here Is Your Properly Wrapped README
-
-Copy everything below exactly:
-
-````markdown
 # AI Code Security Analyzer
 
 An AI-powered static analysis tool that combines traditional security scanners with a local LLM to generate human-readable vulnerability reports.
