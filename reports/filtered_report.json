@@ -41,21 +41,5 @@
       "link": "https://cwe.mitre.org/data/definitions/78.html"
     },
     "message": "subprocess call with shell=True identified, security issue."
-  },
-  {
-    "filename": "././inputs/insecure_app.py",
-    "line_number": 37,
-    "more_info": "https://bandit.readthedocs.io/en/1.9.3/blacklists/blacklist_calls.html#b307-eval",
-    "test_id": "B307",
-    "test_name": "blacklist",
-    "tool": "bandit",
-    "code_snippet": "36     expression = request.args.get(\"expr\")\n37     return str(eval(expression))\n38 \n",
-    "confidence": "HIGH",
-    "severity": "MEDIUM",
-    "CWE": {
-      "id": 78,
-      "link": "https://cwe.mitre.org/data/definitions/78.html"
-    },
-    "message": "Use of possibly insecure function - consider using safer ast.literal_eval."
   }
 ]

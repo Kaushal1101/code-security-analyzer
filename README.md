@@ -1,78 +1,122 @@
 # AI Code Security Analyzer
 
-An AI-powered static analysis tool that combines traditional security scanners with a local LLM to generate human-readable vulnerability reports.
+AI Code Security Analyzer is a lightweight security analysis pipeline that combines traditional static analysis tools with a local LLM to generate clear, human-readable vulnerability reports.
 
-This prototype integrates:
-
-- **Bandit** – Python security linter  
-- **Semgrep** – Static analysis with security-focused rules  
-- **Local LLM (via Ollama)** – Generates structured remediation reports  
-
-The tool scans code, filters high-severity findings, and produces a professional Markdown security report with recommended fixes.
+The goal is to bridge the gap between raw scanner output and actionable security documentation.
 
 ---
 
-## How It Works
+## Overview
 
-1. Run static analysis using Bandit and Semgrep  
-2. Normalize and filter high-severity findings  
-3. Inject structured findings into an LLM prompt  
-4. Generate a human-readable security report  
-5. Save output as a Markdown file  
+The analyzer runs multiple security scanners, collects the findings, and feeds structured vulnerability data into a local LLM to generate a professional security report.
 
-Pipeline flow:
+High level pipeline:
 
+```text
+Codebase
+   ↓
+Bandit + Semgrep
+   ↓
+Finding Normalization
+   ↓
+LLM Report Generation
+   ↓
+Markdown Security Report
 ```
-Code → Bandit + Semgrep → Normalize → LLM → report.md
-```
+
+---
+
+## How the Workflow Works
+
+1. **Static Analysis**
+   - Bandit scans Python code for common security issues.
+   - Semgrep runs security rules to detect vulnerable patterns.
+
+2. **Finding Aggregation**
+   - Results from Bandit and Semgrep are parsed.
+   - High-severity findings are extracted.
+   - Findings are normalized into a structured JSON format.
+
+3. **LLM Prompt Generation**
+   - The structured findings are injected into an LLM prompt.
+   - The vulnerability type is explicitly passed to guide report writing.
+
+4. **Report Generation**
+   - A local LLM (via Ollama) generates a security report.
+   - The report includes:
+     - Executive summary
+     - Vulnerability explanations
+     - File locations
+     - Severity
+     - Recommended fixes
+
+5. **Output**
+   - The final report is saved as a Markdown document.
 
 ---
 
 ## Installation
 
-### 1. Install Dependencies
+### Install Python dependencies
 
 ```bash
-pip install bandit
-brew install semgrep
-brew install ollama
+pip install -r requirements.txt
 ```
 
-### 2. Download LLM Model
+This installs the Python packages used by the analyzer, including Bandit, Requests, and Semgrep.
 
-```bash
-ollama pull llama2.3:3b
-```
+### Install Ollama
 
-Start Ollama:
+Follow the official Ollama installation instructions for your operating system, then start the Ollama server:
 
 ```bash
 ollama serve
 ```
 
----
-
-## Usage
-
-Run the full pipeline:
+### Pull the local model
 
 ```bash
-python your_script_name.py
+ollama pull qwen3:4b
 ```
 
-The generated report will be saved to:
+---
 
+## Running the Analyzer
+
+Run the main pipeline script:
+
+```bash
+python <entry_script>.py
 ```
+
+Make sure the Ollama server is running before starting the analyzer.
+
+After execution, the generated report will be saved to:
+
+```text
 reports/llm_report.md
 ```
 
 ---
 
+## Example Use Case
+
+1. Run the analyzer on a Python project.
+2. Bandit and Semgrep identify vulnerabilities.
+3. The findings are normalized.
+4. The LLM generates a readable report explaining the issues and fixes.
+
+This allows developers to quickly understand security problems without manually interpreting scanner outputs.
+
+---
+
 ## Project Status
 
-✅ End-to-end prototype complete  
+Prototype complete.
 
-🚧 Planned Improvements:
-- VSCode extension integration  
-- Project-wide analysis mode  
-- Automated test case generation  
+Planned improvements:
+
+- VSCode extension integration
+- Multi-language analysis support
+- Expanded Semgrep rule coverage
+- Interactive vulnerability triage

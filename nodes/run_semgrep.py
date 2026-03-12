@@ -15,7 +15,25 @@ def run_semgrep(state: dict) -> dict:
     target_file = state["target_file"]
     semgrep_report = "reports/semgrep_report.json"
 
-    cmd = f"semgrep --config p/security-audit {target_file} --json -o {semgrep_report}"
+    vuln_type = state.get("vuln_type")
+
+    if vuln_type == "injection":
+        configs = [
+            "p/sql-injection",
+            "p/xss",
+            "p/command-injection",
+        ]
+    elif vuln_type == "unsafe_code_exec":
+        configs = ["p/python"]
+    elif vuln_type == "path_traversal":
+        configs = ["p/security-audit"]
+    elif vuln_type == "crypto_weakness":
+        configs = ["p/security-audit"]
+    else:
+        configs = ["p/security-audit"]  # default fallback
+
+    config_flags = " ".join([f"--config {c}" for c in configs])
+    cmd = f"semgrep {config_flags} {target_file} --json -o {semgrep_report}"
 
     result = subprocess.run(cmd, shell=True, text=True, capture_output=True)
 

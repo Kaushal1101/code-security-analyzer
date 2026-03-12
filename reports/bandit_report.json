@@ -1,28 +1,28 @@
 {
   "errors": [],
-  "generated_at": "2026-03-12T01:46:37Z",
+  "generated_at": "2026-03-12T11:30:59Z",
   "metrics": {
     "././inputs/insecure_app.py": {
-      "CONFIDENCE.HIGH": 6,
-      "CONFIDENCE.LOW": 1,
-      "CONFIDENCE.MEDIUM": 2,
+      "CONFIDENCE.HIGH": 2,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
       "CONFIDENCE.UNDEFINED": 0,
-      "SEVERITY.HIGH": 3,
-      "SEVERITY.LOW": 3,
-      "SEVERITY.MEDIUM": 3,
+      "SEVERITY.HIGH": 1,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 1,
       "SEVERITY.UNDEFINED": 0,
       "loc": 26,
       "nosec": 0,
       "skipped_tests": 0
     },
     "_totals": {
-      "CONFIDENCE.HIGH": 6,
-      "CONFIDENCE.LOW": 1,
-      "CONFIDENCE.MEDIUM": 2,
+      "CONFIDENCE.HIGH": 2,
+      "CONFIDENCE.LOW": 0,
+      "CONFIDENCE.MEDIUM": 0,
       "CONFIDENCE.UNDEFINED": 0,
-      "SEVERITY.HIGH": 3,
-      "SEVERITY.LOW": 3,
-      "SEVERITY.MEDIUM": 3,
+      "SEVERITY.HIGH": 1,
+      "SEVERITY.LOW": 0,
+      "SEVERITY.MEDIUM": 1,
       "SEVERITY.UNDEFINED": 0,
       "loc": 26,
       "nosec": 0,
@@ -30,106 +30,6 @@
     }
   },
   "results": [
-    {
-      "code": "1 import os\n2 import subprocess\n3 import hashlib\n",
-      "col_offset": 0,
-      "end_col_offset": 17,
-      "filename": "././inputs/insecure_app.py",
-      "issue_confidence": "HIGH",
-      "issue_cwe": {
-        "id": 78,
-        "link": "https://cwe.mitre.org/data/definitions/78.html"
-      },
-      "issue_severity": "LOW",
-      "issue_text": "Consider possible security implications associated with the subprocess module.",
-      "line_number": 2,
-      "line_range": [
-        2
-      ],
-      "more_info": "https://bandit.readthedocs.io/en/1.9.3/blacklists/blacklist_imports.html#b404-import-subprocess",
-      "test_id": "B404",
-      "test_name": "blacklist"
-    },
-    {
-      "code": "3 import hashlib\n4 import pickle\n5 from flask import Flask, request\n",
-      "col_offset": 0,
-      "end_col_offset": 13,
-      "filename": "././inputs/insecure_app.py",
-      "issue_confidence": "HIGH",
-      "issue_cwe": {
-        "id": 502,
-        "link": "https://cwe.mitre.org/data/definitions/502.html"
-      },
-      "issue_severity": "LOW",
-      "issue_text": "Consider possible security implications associated with pickle module.",
-      "line_number": 4,
-      "line_range": [
-        4
-      ],
-      "more_info": "https://bandit.readthedocs.io/en/1.9.3/blacklists/blacklist_imports.html#b403-import-pickle",
-      "test_id": "B403",
-      "test_name": "blacklist"
-    },
-    {
-      "code": "10 # --- 1. Hardcoded Secret ---\n11 SECRET_KEY = \"supersecret123\"\n12 \n",
-      "col_offset": 13,
-      "end_col_offset": 29,
-      "filename": "././inputs/insecure_app.py",
-      "issue_confidence": "MEDIUM",
-      "issue_cwe": {
-        "id": 259,
-        "link": "https://cwe.mitre.org/data/definitions/259.html"
-      },
-      "issue_severity": "LOW",
-      "issue_text": "Possible hardcoded password: 'supersecret123'",
-      "line_number": 11,
-      "line_range": [
-        11
-      ],
-      "more_info": "https://bandit.readthedocs.io/en/1.9.3/plugins/b105_hardcoded_password_string.html",
-      "test_id": "B105",
-      "test_name": "hardcoded_password_string"
-    },
-    {
-      "code": "14 def hash_password(password):\n15     return hashlib.md5(password.encode()).hexdigest()\n16 \n",
-      "col_offset": 11,
-      "end_col_offset": 41,
-      "filename": "././inputs/insecure_app.py",
-      "issue_confidence": "HIGH",
-      "issue_cwe": {
-        "id": 327,
-        "link": "https://cwe.mitre.org/data/definitions/327.html"
-      },
-      "issue_severity": "HIGH",
-      "issue_text": "Use of weak MD5 hash for security. Consider usedforsecurity=False",
-      "line_number": 15,
-      "line_range": [
-        15
-      ],
-      "more_info": "https://bandit.readthedocs.io/en/1.9.3/plugins/b324_hashlib.html",
-      "test_id": "B324",
-      "test_name": "hashlib"
-    },
-    {
-      "code": "20     cursor = conn.cursor()\n21     query = \"SELECT * FROM users WHERE id = %s\" % user_id\n22     cursor.execute(query)\n",
-      "col_offset": 12,
-      "end_col_offset": 47,
-      "filename": "././inputs/insecure_app.py",
-      "issue_confidence": "LOW",
-      "issue_cwe": {
-        "id": 89,
-        "link": "https://cwe.mitre.org/data/definitions/89.html"
-      },
-      "issue_severity": "MEDIUM",
-      "issue_text": "Possible SQL injection vector through string-based query construction.",
-      "line_number": 21,
-      "line_range": [
-        21
-      ],
-      "more_info": "https://bandit.readthedocs.io/en/1.9.3/plugins/b608_hardcoded_sql_expressions.html",
-      "test_id": "B608",
-      "test_name": "hardcoded_sql_expressions"
-    },
     {
       "code": "26 def delete_file(filename):\n27     subprocess.call(\"rm -rf \" + filename, shell=True)\n28 \n",
       "col_offset": 4,
@@ -151,26 +51,6 @@
       "test_name": "subprocess_popen_with_shell_equals_true"
     },
     {
-      "code": "30 def load_user_data(data):\n31     return pickle.loads(data)\n32 \n",
-      "col_offset": 11,
-      "end_col_offset": 29,
-      "filename": "././inputs/insecure_app.py",
-      "issue_confidence": "HIGH",
-      "issue_cwe": {
-        "id": 502,
-        "link": "https://cwe.mitre.org/data/definitions/502.html"
-      },
-      "issue_severity": "MEDIUM",
-      "issue_text": "Pickle and modules that wrap it can be unsafe when used to deserialize untrusted data, possible security issue.",
-      "line_number": 31,
-      "line_range": [
-        31
-      ],
-      "more_info": "https://bandit.readthedocs.io/en/1.9.3/blacklists/blacklist_calls.html#b301-pickle",
-      "test_id": "B301",
-      "test_name": "blacklist"
-    },
-    {
       "code": "36     expression = request.args.get(\"expr\")\n37     return str(eval(expression))\n38 \n",
       "col_offset": 15,
       "end_col_offset": 31,
@@ -189,26 +69,6 @@
       "more_info": "https://bandit.readthedocs.io/en/1.9.3/blacklists/blacklist_calls.html#b307-eval",
       "test_id": "B307",
       "test_name": "blacklist"
-    },
-    {
-      "code": "40 if __name__ == \"__main__\":\n41     app.run(debug=True)\n42 \n",
-      "col_offset": 4,
-      "end_col_offset": 23,
-      "filename": "././inputs/insecure_app.py",
-      "issue_confidence": "MEDIUM",
-      "issue_cwe": {
-        "id": 94,
-        "link": "https://cwe.mitre.org/data/definitions/94.html"
-      },
-      "issue_severity": "HIGH",
-      "issue_text": "A Flask app appears to be run with debug=True, which exposes the Werkzeug debugger and allows the execution of arbitrary code.",
-      "line_number": 41,
-      "line_range": [
-        41
-      ],
-      "more_info": "https://bandit.readthedocs.io/en/1.9.3/plugins/b201_flask_debug_true.html",
-      "test_id": "B201",
-      "test_name": "flask_debug_true"
     }
   ]
 }

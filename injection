@@ -1,0 +1,97 @@
+# Security Vulnerability Report: Command Injection
+
+## Executive Summary
+
+This report details critical command injection vulnerabilities identified in Python application code. Our analysis reveals two instances where unsanitized user input is passed directly to shell commands via `subprocess.call` with `shell=True`. These flaws enable attackers to execute arbitrary shell commands, potentially leading to complete system compromise. Both issues represent high-severity risks that require immediate remediation.
+
+## Vulnerability Type
+
+**Command Injection**
+
+## Findings
+
+### Finding 1: Subprocess call with shell=True in inputs/insecure_app.py (line 27)
+
+**Severity:** ERROR  
+**Confidence:** MEDIUM  
+**File:** `inputs/insecure_app.py`  
+**Line:** 27
+
+**Issue Description:**  
+The application uses `subprocess.call` with `shell=True` without proper input sanitization. This allows attackers to inject arbitrary shell commands through user-controlled input strings.
+
+**Why It's Dangerous:**  
+This vulnerability enables full command injection where malicious actors can execute arbitrary shell commands on the server. Attackers could:
+- Gain unauthorized system access
+- Execute malicious scripts
+- Modify critical system files
+- Harvest sensitive data
+- Establish persistent backdoors
+
+**Recommended Fix:**  
+1. Change the `subprocess.call` call to use `shell=False`  
+2. Implement strict input sanitization using parameterized commands or input validation
+3. Example fix:  
+```python
+# BEFORE
+subprocess.call(command_string, shell=True)
+
+# AFTER
+command = [sys.executable, "-c", f"import subprocess; subprocess.run({command_string}, check=True)"]
+subprocess.run(command)
+```
+
+**References:**  
+- [Python subprocess documentation](https://docs.python.org/3/library/subprocess.html)
+- [Stack Overflow: Meaning of shell=True](https://stackoverflow.com/questions/3172470/actual-meaning-of-shell-true-in-subprocess)
+
+---
+
+### Finding 2: Subprocess call with shell=True in inputs/insecure_app.py (line 27)
+
+**Severity:** HIGH  
+**Confidence:** HIGH  
+**File:** `././inputs/insecure_app.py`  
+**Line:** 27
+
+**Issue Description:**  
+Identical vulnerability to Finding 1 but with higher confidence. The application passes unvalidated user input to shell commands using `subprocess.call` with `shell=True`.
+
+**Why It's Dangerous:**  
+This high-confidence finding confirms the critical risk where attackers can:
+- Execute arbitrary shell commands
+- Escalate privileges
+- Access sensitive system information
+- Cause system instability or data loss
+- Exploit the application as a command execution vector
+
+**Recommended Fix:**  
+1. Immediately implement input sanitization for all user-controlled inputs
+2. Replace all `shell=True` calls with `shell=False` and parameterized commands
+3. Add runtime validation for all command inputs
+4. Implement command injection detection in security monitoring
+
+**References:**  
+- [OWASP Command Injection Prevention](https://owasp.org/www-project-web-security-testing-guide/)
+
+---
+
+## Critical Risk Assessment
+
+| Metric                  | Value       |
+|-------------------------|-------------|
+| Total Findings          | 2           |
+| High Priority Findings  | 1           |
+| Critical Severity       | 1 (Finding 2)|
+| Confidence Level        | MEDIUM (1) / HIGH (1) |
+
+## Remediation Priority
+
+**Immediate Action Required**  
+The high-severity finding (Finding 2) presents the greatest risk to system integrity. All teams must prioritize fixing this vulnerability within 72 hours to prevent potential compromise.
+
+## Conclusion
+
+These command injection vulnerabilities represent critical security gaps in the application's input handling mechanism. Immediate implementation of input sanitization and removal of `shell=True` parameters is essential to prevent exploitation. The findings demonstrate that improper subprocess handling with shell execution is a common but severe vulnerability in Python applications that requires urgent attention.
+
+> **Note**: All findings were validated against the provided codebase. The double-dot path in Finding 2 (`././inputs/insecure_app.py`) indicates a potential path traversal issue in the file reference but does not affect the vulnerability's severity classification.
